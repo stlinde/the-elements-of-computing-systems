@@ -69,56 +69,25 @@ func TestAdd(t *testing.T) {
     arg1 := []bool{false, true, true, false}
     arg2 := []bool{true, false, false, true}
     expected := []bool{true, true, true, true}
-    result := add(arg1, arg2)
+    result := adder(arg1, arg2)
+    testMult(expected, result, t)
 
-    if len(expected) != len(result) {
-        t.Error("Incompatible length. Expected: 4, got: ", len(result))
-    }
-    for index := range expected {
-        if expected[index] != result[index] {
-            t.Errorf("Value wrong at index: %d, expected: %t, got %t", index, expected[index], result[index])
-        }
-    }
 
     arg1 = []bool{false, false, true, false, true, true, true, true}
     arg2 = []bool{true, false, false, true, false, true, false,true}
     expected = []bool{true, true, false, false, false, true, false, false}
-    result = add(arg1, arg2)
-
-    if len(expected) != len(result) {
-        t.Errorf("Incompatible length. Expected: %d, got: %d", len(expected),len(result))
-    }
-    for index := range expected {
-        if expected[index] != result[index] {
-            t.Errorf("Value wrong at index: %d, expected: %t, got %t", index, expected[index], result[index])
-        }
-    }
+    result = adder(arg1, arg2)
+    testMult(expected, result, t)
 }
 
 func TestIncr(t *testing.T) {
     arg1 := []bool{false, true, true, false}
     expected := []bool{false, true, true, true}
     result := inc(arg1)
-
-    if len(expected) != len(result) {
-        t.Error("Incompatible length. Expected: 4, got: ", len(result))
-    }
-    for index := range expected {
-        if expected[index] != result[index] {
-            t.Errorf("Value wrong at index: %d, expected: %t, got %t", index, expected[index], result[index])
-        }
-    }
+    testMult(expected, result, t)
 
     arg1 = []bool{false, false, true, false, true, true, true, true}
     expected = []bool{false, false, true, true, false, false, false, false}
     result = inc(arg1)
-
-    if len(expected) != len(result) {
-        t.Errorf("Incompatible length. Expected: %d, got: %d", len(expected),len(result))
-    }
-    for index := range expected {
-        if expected[index] != result[index] {
-            t.Errorf("Value wrong at index: %d, expected: %t, got %t", index, expected[index], result[index])
-        }
-    }
+    testMult(expected, result, t)
 }

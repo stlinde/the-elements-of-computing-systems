@@ -237,3 +237,29 @@ func TestDmux8Way(t *testing.T) {
 	}
 }
 
+func TestZeroMultControl(t *testing.T) {
+    arg1 := []bool{true, false, true, true}
+    control := true
+    output := zeroMultControl(arg1, control)
+    expected := []bool{false, false, false, false}
+    for index := range expected {
+        if output[index] != expected[index] {
+            t.Errorf("Value wrong at index: %d, expected: %t, got %t", 
+                index, 
+                expected[index], 
+                output[index])
+        }
+    }
+    arg1 = []bool{true, false, true, true}
+    control = false
+    output = zeroMultControl(arg1, control)
+    expected = []bool{true, false, true, true}
+    for index := range expected {
+        if output[index] != expected[index] {
+            t.Errorf("Value wrong at index: %d, expected: %t, got %t", 
+                index, 
+                expected[index], 
+                output[index])
+        }
+    }
+}

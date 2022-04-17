@@ -48,9 +48,9 @@ func dmux(input bool, sel bool) (bool, bool) {
     return output1, output2
 }
 
-func notMult(input []bool) []bool {
-    output := make([]bool, len(input))
-    for index, value := range input {
+func notMult(arg1 []bool) []bool {
+    output := make([]bool, len(arg1))
+    for index, value := range arg1 {
         output[index] = not(value) 
     }
     return output
@@ -92,9 +92,9 @@ func dmuxMult(input []bool, sel bool) ([]bool, []bool) {
 	return result1, result2
 }
 
-func orMultWay(input []bool) bool {
+func orMultWay(arg1 []bool) bool {
 	result := false
-	for _, value := range input {
+	for _, value := range arg1 {
 		result = or(result, value)
 	}
 	return result
@@ -107,14 +107,14 @@ func mux4WayMult(arg1 []bool, arg2 []bool, arg3 []bool, arg4 []bool, sel []bool)
 }
 
 func mux8WayMult(arg1 []bool, 
-                  arg2 []bool, 
-                  arg3 []bool, 
-                  arg4 []bool,
-                  arg5 []bool, 
-                  arg6 []bool, 
-                  arg7 []bool, 
-                  arg8 []bool, 
-                  sel []bool) []bool {
+                 arg2 []bool, 
+                 arg3 []bool, 
+                 arg4 []bool,
+                 arg5 []bool, 
+                 arg6 []bool, 
+                 arg7 []bool, 
+                 arg8 []bool, 
+                 sel []bool) []bool {
 	result1 := mux4WayMult(arg1, arg2, arg3, arg4, sel[1:])
 	result2 := mux4WayMult(arg5, arg6, arg7, arg8, sel[1:])
 	return muxMult(result1, result2, sel[0])
@@ -134,4 +134,11 @@ func dmux8Way(input bool, sel []bool) (bool, bool, bool, bool, bool, bool, bool,
 	o5, o6 := dmux(r3, sel[2])
 	o7, o8 := dmux(r4, sel[2])
 	return o1, o2, o3, o4, o5, o6, o7, o8
+} 
+  
+func zeroMultControl(arg1 []bool, control bool) []bool {
+    // The zeroMultControl is used as the zx and zy control bits.
+    // If control is 1, it returns an array of 0's (false).
+    zero_array := make([]bool, len(arg1))
+    return muxMult(arg1, zero_array, control)
 }
